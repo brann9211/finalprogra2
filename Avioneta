@@ -1,0 +1,31 @@
+package TrabajoFinal;
+
+public class Avioneta {
+    private String modelo;
+    private String fabricante;
+    private int anioFabricacion;
+    private int capacidadPasajeros;
+    private double pesoMaximo;
+
+    public Avioneta(String modelo, String fabricante, int anioFabricacion, int capacidadPasajeros, double pesoMaximo) {
+        this.modelo = modelo;
+        this.fabricante = fabricante;
+        this.anioFabricacion = anioFabricacion;
+        this.capacidadPasajeros = capacidadPasajeros;
+        this.pesoMaximo = pesoMaximo;
+    }
+
+    public void mostrarDetalles() {
+        System.out.println("Modelo: " + modelo);
+        System.out.println("Fabricante: " + fabricante);
+        System.out.println("Año de Fabricación: " + anioFabricacion);
+        System.out.println("Capacidad de Pasajeros: " + capacidadPasajeros);
+        System.out.println("Peso Máximo: " + pesoMaximo);
+    }
+
+    // Getters
+    public String getModelo() {
+        return modelo;
+    }
+}
+
