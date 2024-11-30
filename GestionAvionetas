@@ -1,0 +1,274 @@
+package TrabajoFinal;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GestionAvionetas {
+    private static ArrayList<Avioneta> avionetas = new ArrayList<>();
+    private static ArrayList<Piloto> pilotos = new ArrayList<>();
+    private static ArrayList<Pasajero> pasajeros = new ArrayList<>();
+    private static ArrayList<Vuelo> vuelos = new ArrayList<>(); // Lista de vuelos
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Agregar datos de ejemplo
+        avionetas.add(new Avioneta("Cessna 120", "Cessna", 2024, 100, 1200.0));
+        pilotos.add(new Piloto("A001", "Edinson Rosales", "A123", 100));
+        pasajeros.add(new Pasajero("Luis Angel Abanto", "99999999", "L001"));
+        pasajeros.add(new Pasajero("Bryan Flores", "123456", "L002"));
+        pasajeros.add(new Pasajero("Frank Chiroque", "654321", "L003"));
+
+        int opcion;
+        do {
+            System.out.println("\n--- Gestión de Avionetas  Lima Airport Partners---");
+            System.out.println("1. Agregar nueva avioneta");
+            System.out.println("2. Consultar nombre de pasajero por DNI");
+            System.out.println("3. Consultar nombre de piloto por ID");
+            System.out.println("4. Obtener detalles de la avioneta por modelo");
+            System.out.println("5. Registrar un vuelo");
+            System.out.println("6. Consultar vuelo por código de vuelo");
+            System.out.println("7. Agregar nuevo pasajero");
+            System.out.println("8. Ingresar pesos y verificar autorización del vuelo");  // Nueva opción
+            System.out.println("9. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    agregarAvioneta(scanner);
+                    break;
+                case 2:
+                    consultarPasajeroPorDNI(scanner);
+                    break;
+                case 3:
+                    consultarPilotoPorID(scanner);
+                    break;
+                case 4:
+                    consultarDetallesPorModelo(scanner);
+                    break;
+                case 5:
+                    registrarVuelo(scanner);
+                    break;
+                case 6:
+                    consultarVueloPorCodigo(scanner);
+                    break;
+                case 7:
+                    agregarNuevoPasajero(scanner);
+                    break;
+                case 8:
+                    verificarAutorizacionVuelo(scanner);  // Llamar al método para verificar el vuelo
+                    break;
+                case 9:
+                    System.out.println("Saliendo del sistema...");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        } while (opcion != 9);
+
+        scanner.close();
+    }
+
+    private static void agregarAvioneta(Scanner scanner) {
+        System.out.print("Ingrese el modelo: ");
+        String modelo = scanner.nextLine();
+        System.out.print("Ingrese el fabricante: ");
+        String fabricante = scanner.nextLine();
+        System.out.print("Ingrese el año de fabricación: ");
+        int anio = scanner.nextInt();
+        System.out.print("Ingrese la capacidad de pasajeros: ");
+        int capacidad = scanner.nextInt();
+        System.out.print("Ingrese el peso máximo: ");
+        double pesoMaximo = scanner.nextDouble();
+        scanner.nextLine(); // Limpiar buffer
+
+        Avioneta nuevaAvioneta = new Avioneta(modelo, fabricante, anio, capacidad, pesoMaximo);
+        avionetas.add(nuevaAvioneta);
+        System.out.println("Avioneta agregada exitosamente.");
+    }
+
+    // Método para agregar un nuevo pasajero
+    private static void agregarNuevoPasajero(Scanner scanner) {
+        System.out.print("Ingrese el nombre del pasajero: ");
+        String nombrePasajero = scanner.nextLine();
+        System.out.print("Ingrese el DNI del pasajero: ");
+        String dniPasajero = scanner.nextLine();
+        System.out.print("Ingrese el boarding pass del pasajero: ");
+        String boardingPass = scanner.nextLine();
+
+        // Crear un nuevo pasajero y agregarlo a la lista de pasajeros
+        Pasajero nuevoPasajero = new Pasajero(nombrePasajero, dniPasajero, boardingPass);
+        pasajeros.add(nuevoPasajero);
+        System.out.println("Pasajero agregado exitosamente.");
+    }
+
+    private static void consultarPasajeroPorDNI(Scanner scanner) {
+        System.out.print("Ingrese el DNI del pasajero: ");
+        String dni = scanner.nextLine();
+        for (Pasajero pasajero : pasajeros) {
+            if (pasajero.getDni().equals(dni)) {
+                System.out.println("Nombre del pasajero: " + pasajero.getNombre());
+                System.out.println("Boarding Pass: " + pasajero.getboardingPass());
+                return;
+            }
+        }
+        System.out.println("Pasajero no encontrado.");
+    }
+
+    private static void consultarPilotoPorID(Scanner scanner) {
+        System.out.print("Ingrese el ID del piloto: ");
+        String id = scanner.nextLine();
+        for (Piloto piloto : pilotos) {
+            if (piloto.getId().equals(id)) {
+                System.out.println("Nombre del piloto: " + piloto.getNombre());
+                System.out.println("Licencia del Piloto: " + piloto.getLicencia());
+                System.out.println("Horas de vuelo: " + piloto.getHorasVuelo());
+                return;
+            }
+        }
+        System.out.println("Piloto no encontrado.");
+    }
+
+    private static void consultarDetallesPorModelo(Scanner scanner) {
+        System.out.print("Ingrese el modelo de la avioneta: ");
+        String modelo = scanner.nextLine();
+        for (Avioneta avioneta : avionetas) {
+            if (avioneta.getModelo().equalsIgnoreCase(modelo)) {
+                System.out.println("\nDetalles de la avioneta:");
+                avioneta.mostrarDetalles();
+                return;
+            }
+        }
+        System.out.println("Modelo de avioneta no encontrado.");
+    }
+
+    private static void registrarVuelo(Scanner scanner) {
+        System.out.print("Ingrese el código del vuelo: ");
+        String codigoVuelo = scanner.nextLine();
+
+        // Ingresar nombre de la avioneta
+        System.out.print("Ingrese el nombre de la avioneta: ");
+        String nombreAvioneta = scanner.nextLine();
+        Avioneta avioneta = null;
+
+        // Buscar la avioneta en la lista existente
+        for (Avioneta a : avionetas) {
+            if (a.getModelo().equalsIgnoreCase(nombreAvioneta)) {
+                avioneta = a;
+                break;
+            }
+        }
+
+        // Si no existe, permitir registrar una nueva avioneta
+        if (avioneta == null) {
+            System.out.println("La avioneta no existe. ¿Desea registrar una nueva avioneta? (s/n)");
+            String respuesta = scanner.nextLine();
+            if (respuesta.equalsIgnoreCase("s")) {
+                System.out.print("Ingrese el fabricante: ");
+                String fabricante = scanner.nextLine();
+                System.out.print("Ingrese el año de fabricación: ");
+                int anio = scanner.nextInt();
+                System.out.print("Ingrese la capacidad de pasajeros: ");
+                int capacidad = scanner.nextInt();
+                System.out.print("Ingrese el peso máximo: ");
+                double pesoMaximo = scanner.nextDouble();
+                scanner.nextLine(); // Limpiar buffer
+
+                avioneta = new Avioneta(nombreAvioneta, fabricante, anio, capacidad, pesoMaximo);
+                avionetas.add(avioneta);
+                System.out.println("Nueva avioneta registrada exitosamente.");
+            } else {
+                System.out.println("No se puede registrar el vuelo sin una avioneta.");
+                return;
+            }
+        }
+
+        // Ingresar datos del piloto
+        System.out.print("Ingrese el ID del piloto: ");
+        String idPiloto = scanner.nextLine();
+        Piloto piloto = null;
+        for (Piloto p : pilotos) {
+            if (p.getId().equalsIgnoreCase(idPiloto)) {
+                piloto = p;
+                break;
+            }
+        }
+
+        // Si el piloto no existe, permitir registrar uno nuevo
+        if (piloto == null) {
+            System.out.println("El piloto no existe. ¿Desea registrar un nuevo piloto? (s/n)");
+            String respuesta = scanner.nextLine();
+            if (respuesta.equalsIgnoreCase("s")) {
+                System.out.print("Ingrese el nombre del piloto: ");
+                String nombrePiloto = scanner.nextLine();
+                System.out.print("Ingrese la licencia del piloto: ");
+                String licencia = scanner.nextLine();
+                System.out.print("Ingrese las horas de vuelo del piloto: ");
+                int horasVuelo = scanner.nextInt();
+                scanner.nextLine(); // Limpiar buffer
+
+                piloto = new Piloto(idPiloto, nombrePiloto, licencia, horasVuelo);
+                pilotos.add(piloto);
+                System.out.println("Nuevo piloto registrado exitosamente.");
+            } else {
+                System.out.println("No se puede registrar el vuelo sin un piloto.");
+                return;
+            }
+        }
+
+        // Ingresar el pasajero
+        System.out.print("Ingrese el nombre del pasajero: ");
+        String nombrePasajero = scanner.nextLine();
+
+        // Registrar el vuelo
+        Vuelo vuelo = new Vuelo(codigoVuelo, nombreAvioneta, idPiloto, piloto.getNombre(), piloto.getHorasVuelo(), nombrePasajero);
+        vuelos.add(vuelo);
+        System.out.println("Vuelo registrado exitosamente.");
+    }
+
+    private static void consultarVueloPorCodigo(Scanner scanner) {
+        System.out.print("Ingrese el código de vuelo a buscar: ");
+        String codigoVuelo = scanner.nextLine();
+
+        // Buscar el vuelo por código
+        for (Vuelo vuelo : vuelos) {
+            if (vuelo.getCodigoVuelo().equalsIgnoreCase(codigoVuelo)) {
+                System.out.println("\nDetalles del vuelo:");
+                vuelo.mostrarDetalles();
+                return;
+            }
+        }
+        System.out.println("Vuelo no encontrado con ese código.");
+    }
+
+    // Método para ingresar los pesos y verificar la autorización del vuelo
+    private static void verificarAutorizacionVuelo(Scanner scanner) {
+        double pesoPiloto = 0;
+        double PesoPasajeros = 0;
+        double pesoAvioneta = 0;
+
+        // Ingresar peso del piloto
+        System.out.print("Ingrese el peso del piloto (kg): ");
+        pesoPiloto = scanner.nextDouble();
+
+        System.out.print("Ingrese el peso de los pasajeros  (kg): ");
+        PesoPasajeros = scanner.nextDouble();
+
+        // Ingresar peso de la avioneta
+        System.out.print("Ingrese el peso de la avioneta (kg): ");
+        pesoAvioneta = scanner.nextDouble();
+
+        // Calcular el peso total
+        double pesoTotal = pesoPiloto + PesoPasajeros + pesoAvioneta;
+
+        // Verificar si el peso total supera los 10,000 kg
+        if (pesoTotal > 10000) {
+            System.out.println("No procede el vuelo. Peso total excede los 10,000 kg.");
+        } else {
+            System.out.println("Vuelo autorizado. Peso total: " + pesoTotal + " kg.");
+            System.out.println("Peso Limite : 10,000 kg");
+        }
+    }
+}
