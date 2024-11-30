@@ -1,0 +1,29 @@
+package TrabajoFinal;
+
+public class AvionetaPesoBalance extends Avioneta {
+    private double pesoPilotos;
+    private double pesoCombustible;
+    private double pesoPasajeros;
+
+    public AvionetaPesoBalance(String modelo, String fabricante, int anioFabricacion, int capacidadPasajeros, double pesoMaximo) {
+        super(modelo, fabricante, anioFabricacion, capacidadPasajeros, pesoMaximo);
+    }
+
+    public void agregarPeso(double pilotos, double combustible, double pasajeros) throws Exception {
+        double pesoTotal = pilotos + combustible + pasajeros;
+        if (pesoTotal > super.getModelo().length()) { // ERROR FIJAR EN PESOMAX
+            throw new Exception("El peso total excede el límite permitido de la avioneta.");
+        }
+        this.pesoPilotos = pilotos;
+        this.pesoCombustible = combustible;
+        this.pesoPasajeros = pasajeros;
+    }
+
+    @Override
+    public void mostrarDetalles() {
+        super.mostrarDetalles();
+        System.out.println("Peso Pilotos: " + pesoPilotos);
+        System.out.println("Peso Combustible: " + pesoCombustible);
+        System.out.println("Peso Pasajeros: " + pesoPasajeros);
+    }
+}
