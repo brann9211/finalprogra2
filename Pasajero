@@ -1,0 +1,47 @@
+package TrabajoFinal;
+
+public class Pasajero {
+    private String nombre;
+    private String dni;
+    private String boardingPass;
+
+    // Constructor
+    public Pasajero(String nombre, String dni, String boardingPass) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.boardingPass = boardingPass;
+    }
+
+    // Métodos getter y setter
+    public String getNombre() {
+        return nombre;
+    }
+    public String getboardingPass() {
+        return boardingPass;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setBoardingPass(String boardingPass) {
+        this.boardingPass = boardingPass;
+    }
+
+    @Override
+    public String toString() {
+        return "Pasajero{" +
+                "nombre='" + nombre + '\'' +
+                ", dni='" + dni + '\'' +
+                ", boardingPass='" + boardingPass + '\'' +
+                '}';
+    }
+}
