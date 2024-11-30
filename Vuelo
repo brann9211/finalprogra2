@@ -1,0 +1,48 @@
+package TrabajoFinal;
+
+public class Vuelo {
+    private String codigoVuelo;
+    private String nombreAvioneta;
+    private String idPiloto;
+    private String nombrePiloto;
+    private String nombrePasajero;
+
+    // Constructor de vuelo
+    public Vuelo(String codigoVuelo, String nombreAvioneta, String idPiloto, String nombrePiloto, int horasVuelo, String nombrePasajero) {
+        this.codigoVuelo = codigoVuelo;
+        this.nombreAvioneta = nombreAvioneta;
+        this.idPiloto = idPiloto;
+        this.nombrePiloto = nombrePiloto;
+        this.nombrePasajero = nombrePasajero;
+    }
+
+    // Getters
+    public String getCodigoVuelo() {
+        return codigoVuelo;
+    }
+
+    public String getNombreAvioneta() {
+        return nombreAvioneta;
+    }
+
+    public String getIdPiloto() {
+        return idPiloto;
+    }
+
+    public String getNombrePiloto() {
+        return nombrePiloto;
+    }
+
+    public String getNombrePasajero() {
+        return nombrePasajero;
+    }
+
+    // Método para mostrar los detalles del vuelo
+    public void mostrarDetalles() {
+        System.out.println("Código de vuelo: " + codigoVuelo);
+        System.out.println("Nombre de la avioneta: " + nombreAvioneta);
+        System.out.println("ID del piloto: " + idPiloto);
+        System.out.println("Nombre del piloto: " + nombrePiloto);
+        System.out.println("Nombre del pasajero: " + nombrePasajero);
+    }
+}
